@@ -1,0 +1,146 @@
+<html>
+
+<head>
+  <title>金莎歷史價格</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <h1>金莎巧克力歷史價格</h1>
+  <form id="priceForm">
+    <label>年份: <input type="number" name="year" required></label>
+    <label>月份: <input type="number" name="month" required></label>
+    <label>日期: <input type="number" name="date" required></label>
+    <label>價格: <input type="number" name="price" required></label>
+    <button type="submit">新增</button>
+  </form>
+  <p id="msg"></p>
+  <hr>
+  <h2>歷史價格列表</h2>
+  <table id="priceTable" border="1">
+    <thead>
+      <tr>
+        <th>ID</th><th>Year</th><th>Month</th><th>Date</th><th>Price</th><th>操作</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <div id="editBox" style="display:none; margin-top:20px;">
+    <h3>修改資料</h3>
+    <form id="editForm">
+      <input type="hidden" name="id">
+      <label>年份: <input type="number" name="year" required></label>
+      <label>月份: <input type="number" name="month" required></label>
+      <label>日期: <input type="number" name="date" required></label>
+      <label>價格: <input type="number" name="price" required></label>
+      <button type="submit">儲存</button>
+      <button type="button" id="cancelEdit">取消</button>
+    </form>
+    <p id="editMsg"></p>
+  </div>
+  <hr>
+  <h2>查詢指定年份</h2>
+  <form id="searchForm">
+    <label>年份: <input type="number" name="searchYear" required></label>
+    <button type="submit">查詢</button>
+  </form>
+  <p id="searchMsg"></p>
+  <table id="searchTable" border="1" style="margin-top:10px;">
+    <thead>
+      <tr>
+        <th>ID</th><th>Year</th><th>Month</th><th>Date</th><th>Price</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <script>
+    async function loadTable() {
+      const res = await fetch('/api/price');
+      const data = await res.json();
+      const tbody = document.querySelector('#priceTable tbody');
+      tbody.innerHTML = data.map(row =>
+        `<tr>
+          <td>${row.id}</td><td>${row.year}</td><td>${row.month}</td><td>${row.date}</td><td>${row.price}</td>
+          <td><button onclick="editRow(${row.id},${row.year},${row.month},${row.date},${row.price})">修改</button></td>
+        </tr>`
+      ).join('');
+    }
+    function editRow(id, year, month, date, price) {
+      document.getElementById('editBox').style.display = '';
+      const form = document.getElementById('editForm');
+      form.id.value = id;
+      form.year.value = year;
+      form.month.value = month;
+      form.date.value = date;
+      form.price.value = price;
+      document.getElementById('editMsg').textContent = '';
+    }
+    document.getElementById('priceForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const body = {
+        year: form.year.value,
+        month: form.month.value,
+        date: form.date.value,
+        price: form.price.value
+      };
+      const res = await fetch('/api/insert', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const msg = await res.text();
+      document.getElementById('msg').textContent = msg;
+      loadTable();
+      form.reset();
+    });
+    document.getElementById('editForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const body = {
+        id: form.id.value,
+        year: form.year.value,
+        month: form.month.value,
+        date: form.date.value,
+        price: form.price.value
+      };
+      const res = await fetch('/api/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const msg = await res.text();
+      document.getElementById('editMsg').textContent = msg;
+      loadTable();
+      setTimeout(() => {
+        document.getElementById('editBox').style.display = 'none';
+      }, 800);
+    });
+    document.getElementById('cancelEdit').onclick = function() {
+      document.getElementById('editBox').style.display = 'none';
+    };
+    document.getElementById('searchForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const year = this.searchYear.value;
+      const res = await fetch(`/api?year=${year}`);
+      if (!res.ok) {
+        document.getElementById('searchMsg').textContent = '查詢失敗';
+        return;
+      }
+      const data = await res.json();
+      const tbody = document.querySelector('#searchTable tbody');
+      if (data.length === 0) {
+        document.getElementById('searchMsg').textContent = '查無資料';
+        tbody.innerHTML = '';
+      } else {
+        document.getElementById('searchMsg').textContent = '';
+        tbody.innerHTML = data.map(row =>
+          `<tr><td>${row.id}</td><td>${row.year}</td><td>${row.month}</td><td>${row.date}</td><td>${row.price}</td></tr>`
+        ).join('');
+      }
+    });
+    loadTable();
+  </script>
+</body>
+
+</html>
