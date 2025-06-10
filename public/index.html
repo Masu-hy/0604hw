@@ -1,146 +1,162 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-  <title>金莎歷史價格</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferrero Rocher - 金莎巧克力</title>
+  <link rel="stylesheet" href="0613.css">
 </head>
-
 <body>
-  <h1>金莎巧克力歷史價格</h1>
-  <form id="priceForm">
-    <label>年份: <input type="number" name="year" required></label>
-    <label>月份: <input type="number" name="month" required></label>
-    <label>日期: <input type="number" name="date" required></label>
-    <label>價格: <input type="number" name="price" required></label>
-    <button type="submit">新增</button>
-  </form>
-  <p id="msg"></p>
-  <hr>
-  <h2>歷史價格列表</h2>
-  <table id="priceTable" border="1">
-    <thead>
-      <tr>
-        <th>ID</th><th>Year</th><th>Month</th><th>Date</th><th>Price</th><th>操作</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <div id="editBox" style="display:none; margin-top:20px;">
-    <h3>修改資料</h3>
-    <form id="editForm">
-      <input type="hidden" name="id">
-      <label>年份: <input type="number" name="year" required></label>
-      <label>月份: <input type="number" name="month" required></label>
-      <label>日期: <input type="number" name="date" required></label>
-      <label>價格: <input type="number" name="price" required></label>
-      <button type="submit">儲存</button>
-      <button type="button" id="cancelEdit">取消</button>
-    </form>
-    <p id="editMsg"></p>
+<header class="header">
+  <div class="container">
+    <h1>Ferrero Taiwan</h1>
   </div>
-  <hr>
-  <h2>查詢指定年份</h2>
-  <form id="searchForm">
-    <label>年份: <input type="number" name="searchYear" required></label>
-    <button type="submit">查詢</button>
-  </form>
-  <p id="searchMsg"></p>
-  <table id="searchTable" border="1" style="margin-top:10px;">
-    <thead>
-      <tr>
-        <th>ID</th><th>Year</th><th>Month</th><th>Date</th><th>Price</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <script>
-    async function loadTable() {
-      const res = await fetch('/api/price');
-      const data = await res.json();
-      const tbody = document.querySelector('#priceTable tbody');
-      tbody.innerHTML = data.map(row =>
-        `<tr>
-          <td>${row.id}</td><td>${row.year}</td><td>${row.month}</td><td>${row.date}</td><td>${row.price}</td>
-          <td><button onclick="editRow(${row.id},${row.year},${row.month},${row.date},${row.price})">修改</button></td>
-        </tr>`
-      ).join('');
-    }
-    function editRow(id, year, month, date, price) {
-      document.getElementById('editBox').style.display = '';
-      const form = document.getElementById('editForm');
-      form.id.value = id;
-      form.year.value = year;
-      form.month.value = month;
-      form.date.value = date;
-      form.price.value = price;
-      document.getElementById('editMsg').textContent = '';
-    }
-    document.getElementById('priceForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const body = {
-        year: form.year.value,
-        month: form.month.value,
-        date: form.date.value,
-        price: form.price.value
-      };
-      const res = await fetch('/api/insert', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      });
-      const msg = await res.text();
-      document.getElementById('msg').textContent = msg;
-      loadTable();
-      form.reset();
-    });
-    document.getElementById('editForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const body = {
-        id: form.id.value,
-        year: form.year.value,
-        month: form.month.value,
-        date: form.date.value,
-        price: form.price.value
-      };
-      const res = await fetch('/api/update', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      });
-      const msg = await res.text();
-      document.getElementById('editMsg').textContent = msg;
-      loadTable();
-      setTimeout(() => {
-        document.getElementById('editBox').style.display = 'none';
-      }, 800);
-    });
-    document.getElementById('cancelEdit').onclick = function() {
-      document.getElementById('editBox').style.display = 'none';
-    };
-    document.getElementById('searchForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const year = this.searchYear.value;
-      const res = await fetch(`/api?year=${year}`);
-      if (!res.ok) {
-        document.getElementById('searchMsg').textContent = '查詢失敗';
-        return;
-      }
-      const data = await res.json();
-      const tbody = document.querySelector('#searchTable tbody');
-      if (data.length === 0) {
-        document.getElementById('searchMsg').textContent = '查無資料';
-        tbody.innerHTML = '';
-      } else {
-        document.getElementById('searchMsg').textContent = '';
-        tbody.innerHTML = data.map(row =>
-          `<tr><td>${row.id}</td><td>${row.year}</td><td>${row.month}</td><td>${row.date}</td><td>${row.price}</td></tr>`
-        ).join('');
-      }
-    });
-    loadTable();
-  </script>
-</body>
+</header>
 
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Ferrero Rocher</h1>
+      <p>每一顆金莎都是獨特的體驗，酥脆榛果外殼包裹著絲滑巧克力，中心是完整的榛果，帶給您無與倫比的美味享受。</p>
+    </div>
+  </div>
+</section>
+
+<section class="product-section">
+  <div class="container">
+    <div class="product-grid">
+      <div class="product-image">
+        <img src="image.png" alt="Ferrero Rocher 金莎巧克力">
+      </div>
+      <div class="product-info">
+        <h2>金莎巧克力</h2>
+        <p>Ferrero Rocher 是世界知名的高級巧克力品牌，以其獨特的三層結構聞名：酥脆的榛果威化外殼、絲滑的巧克力內餡，以及中心完整的烘烤榛果。</p>
+        <p>每一顆金莎都經過精心製作，使用最優質的原料，為您帶來奢華的味覺體驗。無論是自己享用還是作為禮品，都是完美的選擇。</p>
+        <p><strong>主要成分：</strong>榛果、牛奶巧克力、威化餅、可可粉</p>
+        <p><strong>包裝規格：</strong>3粒裝、8粒裝、16粒裝、24粒裝</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <h2 class="section-title">產品特色</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌰</div>
+        <h3>精選榛果</h3>
+        <p>使用來自土耳其的優質榛果，經過精心烘烤，帶來濃郁香氣</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🍫</div>
+        <h3>絲滑巧克力</h3>
+        <p>採用上等可可豆製作的牛奶巧克力，口感絲滑細膩</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✨</div>
+        <h3>酥脆外殼</h3>
+        <p>獨特的威化餅外殼，提供完美的酥脆口感</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎁</div>
+        <h3>精美包裝</h3>
+        <p>金色包裝紙，適合作為禮品贈送親朋好友</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="price-tracking">
+  <div class="container">
+    <h2 class="section-title">金莎巧克力歷史價格追蹤</h2>
+
+    <div class="form-container">
+      <h3>新增價格記錄</h3>
+      <form id="priceForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="year">年份</label>
+            <input type="number" id="year" name="year" required min="2000" max="2030">
+          </div>
+          <div class="form-group">
+            <label for="month">月份</label>
+            <input type="number" id="month" name="month" required min="1" max="12">
+          </div>
+          <div class="form-group">
+            <label for="date">日期</label>
+            <input type="number" id="date" name="date" required min="1" max="31">
+          </div>
+          <div class="form-group">
+            <label for="price">價格 (NT$)</label>
+            <input type="number" id="price" name="price" required min="0" step="0.01">
+          </div>
+        </div>
+        <button type="submit" class="btn">新增記錄</button>
+      </form>
+      <div id="msg"></div>
+    </div>
+
+    <h3>歷史價格列表</h3>
+    <table id="priceTable">
+      <thead>
+      <tr>
+
+        <th>年份</th>
+        <th>月份</th>
+        <th>日期</th>
+        <th>價格 (NT$)</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div id="editBox" class="edit-box" style="display:none;">
+      <h3>修改價格記錄</h3>
+      <form id="editForm">
+        <input type="hidden" name="id">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="editYear">年份</label>
+            <input type="number" id="editYear" name="year" required min="2000" max="2030">
+          </div>
+          <div class="form-group">
+            <label for="editMonth">月份</label>
+            <input type="number" id="editMonth" name="month" required min="1" max="12">
+          </div>
+          <div class="form-group">
+            <label for="editDate">日期</label>
+            <input type="number" id="editDate" name="date" required min="1" max="31">
+          </div>
+          <div class="form-group">
+            <label for="editPrice">價格 (NT$)</label>
+            <input type="number" id="editPrice" name="price" required min="0" step="0.01">
+          </div>
+        </div>
+        <button type="submit" class="btn">儲存修改</button>
+        <button type="button" id="cancelEdit" class="btn btn-secondary">取消</button>
+      </form>
+      <div id="editMsg"></div>
+    </div>
+
+    <div class="chart-container">
+      <h3>價格趨勢圖表</h3>
+      <div class="chart-controls">
+        <div class="form-group">
+          <label for="chartYear">選擇年份</label>
+          <select id="chartYear">
+            <option value="">所有年份</option>
+          </select>
+        </div>
+        <button id="updateChart" class="btn">更新圖表</button>
+      </div>
+      <canvas id="priceChart"></canvas>
+      <div id="chartTooltip" class="chart-tooltip"></div>
+    </div>
+  </div>
+</section>
+
+<script src="0613.js"></script>
+</body>
 </html>

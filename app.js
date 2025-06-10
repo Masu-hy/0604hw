@@ -129,6 +129,38 @@ app.post('/api/insert', (req, res) => {
   );
 });
 
+// 修改資料的 API
+app.post('/api/update', (req, res) => {
+  const { id, year, month, date, price } = req.body;
+  if (!id || !year || !month || !date || !price) {
+    return res.status(400).send('請完整填寫 id, year, month, date, price');
+  }
+  db.run(
+    'UPDATE history_price SET year = ?, month = ?, date = ?, price = ? WHERE id = ?',
+    [year, month, date, price, id],
+    function (err) {
+      if (err) {
+        return res.status(500).send('更新失敗: ' + err.message);
+      }
+      res.send('更新成功！');
+    }
+  );
+});
+
+// 刪除資料的 API
+app.post('/api/delete', (req, res) => {
+  const { id } = req.body;
+  if (!id) {
+    return res.status(400).send('請提供 id');
+  }
+  db.run('DELETE FROM history_price WHERE id = ?', [id], function (err) {
+    if (err) {
+      return res.status(500).send('刪除失敗: ' + err.message);
+    }
+    res.send('刪除成功！');
+  });
+});
+
 app.set('port', 3002);
 
 const server = app.listen(3002, () => {

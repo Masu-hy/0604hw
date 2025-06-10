@@ -6,12 +6,10 @@ const sqlite3 = require('sqlite3').verbose();
 const dbDir = path.join(__dirname, 'db');
 const dbPath = path.join(dbDir, 'sqlite.db');
 
-// 若 db 資料夾已存在則刪除（包含資料庫檔案）
-if (fs.existsSync(dbDir)) {
-  fs.rmSync(dbDir, { recursive: true, force: true });
+// 若 db 資料夾不存在則建立
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir);
 }
-// 重新建立 db 資料夾
-fs.mkdirSync(dbDir);
 
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
@@ -64,5 +62,37 @@ db.serialize(() => {
   });
 });
 
-module.exports = db;
+// 新增價格記錄
+function insertPrice(year, month, date, price, callback) {
+  db.run(
+    'INSERT INTO history_price (year, month, date, price) VALUES (?, ?, ?, ?)',
+    [year, month, date, price],
+    callback
+  );
+}
 
+// 修改價格記錄
+function updatePrice(id, year, month, date, price, callback) {
+  db.run(
+    'UPDATE history_price SET year=?, month=?, date=?, price=? WHERE id=?',
+    [year, month, date, price, id],
+    callback
+  );
+}
+
+// 刪除價格記錄
+function deletePrice(id, callback) {
+  db.run(
+    'DELETE FROM history_price WHERE id=?',
+    [id],
+    callback
+  );
+}
+
+module.exports = {
+  db,
+  insertPrice,
+  updatePrice,
+  deletePrice,
+  dbPath
+};
