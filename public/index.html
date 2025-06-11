@@ -7,155 +7,187 @@
   <link rel="stylesheet" href="0613.css">
 </head>
 <body>
-<header class="header">
-  <div class="container">
-    <h1>Ferrero Taiwan</h1>
-  </div>
-</header>
-
-<section class="hero-section">
-  <div class="container">
-    <div class="hero-content">
-      <h1>Ferrero Rocher</h1>
-      <p>每一顆金莎都是獨特的體驗，酥脆榛果外殼包裹著絲滑巧克力，中心是完整的榛果，帶給您無與倫比的美味享受。</p>
+<!-- 載入畫面 -->
+<div id="loadingScreen" class="loading-screen">
+  <div class="loading-content">
+    <div class="loading-image-container">
+      <img src="Ferrero Rocher 金莎巧克力.jpg" alt="Ferrero Rocher" class="loading-image">
+      <div class="golden-overlay"></div>
+    </div>
+    <div class="loading-text">
+      <h1 class="loading-title">Ferrero Rocher</h1>
+      <p class="loading-description">
+        每一顆金莎都是獨特的體驗，酥脆榛果外殼包裹著絲滑巧克力，中心是完整的榛果，帶給您無與倫比的美味享受。
+      </p>
     </div>
   </div>
-</section>
+</div>
 
-<section class="product-section">
-  <div class="container">
-    <div class="product-grid">
-      <div class="product-image">
-        <img src="image.png" alt="Ferrero Rocher 金莎巧克力">
-      </div>
-      <div class="product-info">
-        <h2>金莎巧克力</h2>
-        <p>Ferrero Rocher 是世界知名的高級巧克力品牌，以其獨特的三層結構聞名：酥脆的榛果威化外殼、絲滑的巧克力內餡，以及中心完整的烘烤榛果。</p>
-        <p>每一顆金莎都經過精心製作，使用最優質的原料，為您帶來奢華的味覺體驗。無論是自己享用還是作為禮品，都是完美的選擇。</p>
-        <p><strong>主要成分：</strong>榛果、牛奶巧克力、威化餅、可可粉</p>
-        <p><strong>包裝規格：</strong>3粒裝、8粒裝、16粒裝、24粒裝</p>
+<!-- 主要內容 -->
+<div id="mainContent" class="main-content">
+  <header class="header">
+    <div class="container">
+      <h1>Ferrero Taiwan</h1>
+      <div class="header-decoration"></div>
+    </div>
+  </header>
+
+  <section class="hero-section fade-in-element">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Ferrero Rocher</h1>
+        <div class="hero-divider"></div>
+        <p>每一顆金莎都是獨特的體驗，酥脆榛果外殼包裹著絲滑巧克力，中心是完整的榛果，帶給您無與倫比的美味享受。</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="features">
-  <div class="container">
-    <h2 class="section-title">產品特色</h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🌰</div>
-        <h3>精選榛果</h3>
-        <p>使用來自土耳其的優質榛果，經過精心烘烤，帶來濃郁香氣</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🍫</div>
-        <h3>絲滑巧克力</h3>
-        <p>採用上等可可豆製作的牛奶巧克力，口感絲滑細膩</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">✨</div>
-        <h3>酥脆外殼</h3>
-        <p>獨特的威化餅外殼，提供完美的酥脆口感</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🎁</div>
-        <h3>精美包裝</h3>
-        <p>金色包裝紙，適合作為禮品贈送親朋好友</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="price-tracking">
-  <div class="container">
-    <h2 class="section-title">金莎巧克力歷史價格追蹤</h2>
-
-    <div class="form-container">
-      <h3>新增價格記錄</h3>
-      <form id="priceForm">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="year">年份</label>
-            <input type="number" id="year" name="year" required min="2000" max="2030">
-          </div>
-          <div class="form-group">
-            <label for="month">月份</label>
-            <input type="number" id="month" name="month" required min="1" max="12">
-          </div>
-          <div class="form-group">
-            <label for="date">日期</label>
-            <input type="number" id="date" name="date" required min="1" max="31">
-          </div>
-          <div class="form-group">
-            <label for="price">價格 (NT$)</label>
-            <input type="number" id="price" name="price" required min="0" step="0.01">
+  <section class="product-section fade-in-element">
+    <div class="container">
+      <div class="product-grid">
+        <div class="product-image fade-in-left">
+          <div class="image-frame">
+            <img src="image.png" alt="Ferrero Rocher 金莎巧克力">
           </div>
         </div>
-        <button type="submit" class="btn">新增記錄</button>
-      </form>
-      <div id="msg"></div>
-    </div>
-
-    <h3>歷史價格列表</h3>
-    <table id="priceTable">
-      <thead>
-      <tr>
-
-        <th>年份</th>
-        <th>月份</th>
-        <th>日期</th>
-        <th>價格 (NT$)</th>
-        <th>操作</th>
-      </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-
-    <div id="editBox" class="edit-box" style="display:none;">
-      <h3>修改價格記錄</h3>
-      <form id="editForm">
-        <input type="hidden" name="id">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="editYear">年份</label>
-            <input type="number" id="editYear" name="year" required min="2000" max="2030">
-          </div>
-          <div class="form-group">
-            <label for="editMonth">月份</label>
-            <input type="number" id="editMonth" name="month" required min="1" max="12">
-          </div>
-          <div class="form-group">
-            <label for="editDate">日期</label>
-            <input type="number" id="editDate" name="date" required min="1" max="31">
-          </div>
-          <div class="form-group">
-            <label for="editPrice">價格 (NT$)</label>
-            <input type="number" id="editPrice" name="price" required min="0" step="0.01">
+        <div class="product-info fade-in-right">
+          <h2>金莎巧克力</h2>
+          <div class="product-divider"></div>
+          <p>Ferrero Rocher 是世界知名的高級巧克力品牌，以其獨特的三層結構聞名：酥脆的榛果威化外殼、絲滑的巧克力內餡，以及中心完整的烘烤榛果。</p>
+          <p>每一顆金莎都經過精心製作，使用最優質的原料，為您帶來奢華的味覺體驗。無論是自己享用還是作為禮品，都是完美的選擇。</p>
+          <div class="product-details">
+            <div class="detail-item">
+              <span class="detail-label">主要成分：</span>
+              <span class="detail-value">榛果、牛奶巧克力、威化餅、可可粉</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">包裝規格：</span>
+              <span class="detail-value">3粒裝、8粒裝、16粒裝、24粒裝</span>
+            </div>
           </div>
         </div>
-        <button type="submit" class="btn">儲存修改</button>
-        <button type="button" id="cancelEdit" class="btn btn-secondary">取消</button>
-      </form>
-      <div id="editMsg"></div>
-    </div>
-
-    <div class="chart-container">
-      <h3>價格趨勢圖表</h3>
-      <div class="chart-controls">
-        <div class="form-group">
-          <label for="chartYear">選擇年份</label>
-          <select id="chartYear">
-            <option value="">所有年份</option>
-          </select>
-        </div>
-        <button id="updateChart" class="btn">更新圖表</button>
       </div>
-      <canvas id="priceChart"></canvas>
-      <div id="chartTooltip" class="chart-tooltip"></div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <section class="features fade-in-element">
+    <div class="container">
+      <h2 class="section-title fade-in-scale">產品特色</h2>
+      <div class="features-grid">
+        <div class="feature-card fade-in-element fade-in-delay-1">
+          <div class="feature-icon">🌰</div>
+          <h3>精選榛果</h3>
+          <p>使用來自土耳其的優質榛果，經過精心烘烤，帶來濃郁香氣</p>
+        </div>
+        <div class="feature-card fade-in-element fade-in-delay-2">
+          <div class="feature-icon">🍫</div>
+          <h3>絲滑巧克力</h3>
+          <p>採用上等可可豆製作的牛奶巧克力，口感絲滑細膩</p>
+        </div>
+        <div class="feature-card fade-in-element fade-in-delay-3">
+          <div class="feature-icon">✨</div>
+          <h3>酥脆外殼</h3>
+          <p>獨特的威化餅外殼，提供完美的酥脆口感</p>
+        </div>
+        <div class="feature-card fade-in-element fade-in-delay-4">
+          <div class="feature-icon">🎁</div>
+          <h3>精美包裝</h3>
+          <p>金色包裝紙，適合作為禮品贈送親朋好友</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="price-tracking fade-in-element">
+    <div class="container">
+      <h2 class="section-title fade-in-scale">金莎巧克力歷史價格追蹤</h2>
+
+      <div class="form-container fade-in-element fade-in-delay-1">
+        <h3>新增價格記錄</h3>
+        <form id="priceForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="year">年份</label>
+              <input type="number" id="year" name="year" required min="2000" max="2030">
+            </div>
+            <div class="form-group">
+              <label for="month">月份</label>
+              <input type="number" id="month" name="month" required min="1" max="12">
+            </div>
+            <div class="form-group">
+              <label for="date">日期</label>
+              <input type="number" id="date" name="date" required min="1" max="31">
+            </div>
+            <div class="form-group">
+              <label for="price">價格 (NT$)</label>
+              <input type="number" id="price" name="price" required min="0" step="0.01">
+            </div>
+          </div>
+          <button type="submit" class="btn">新增記錄</button>
+        </form>
+        <div id="msg"></div>
+      </div>
+
+      <div class="table-container fade-in-element fade-in-delay-2">
+        <table id="priceTable">
+          <thead>
+          <tr>
+            <th>年份</th>
+            <th>月份</th>
+            <th>日期</th>
+            <th>價格 (NT$)</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div id="editBox" class="edit-box" style="display:none;">
+        <h3>修改價格記錄</h3>
+        <form id="editForm">
+          <input type="hidden" name="id">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="editYear">年份</label>
+              <input type="number" id="editYear" name="year" required min="2000" max="2030">
+            </div>
+            <div class="form-group">
+              <label for="editMonth">月份</label>
+              <input type="number" id="editMonth" name="month" required min="1" max="12">
+            </div>
+            <div class="form-group">
+              <label for="editDate">日期</label>
+              <input type="number" id="editDate" name="date" required min="1" max="31">
+            </div>
+            <div class="form-group">
+              <label for="editPrice">價格 (NT$)</label>
+              <input type="number" id="editPrice" name="price" required min="0" step="0.01">
+            </div>
+          </div>
+          <button type="submit" class="btn">儲存修改</button>
+          <button type="button" id="cancelEdit" class="btn btn-secondary">取消</button>
+        </form>
+        <div id="editMsg"></div>
+      </div>
+
+      <div class="chart-container fade-in-element fade-in-delay-3">
+        <h3>價格趨勢圖表</h3>
+        <div class="chart-controls">
+          <div class="form-group">
+            <label for="chartYear">選擇年份</label>
+            <select id="chartYear">
+              <option value="">所有年份</option>
+            </select>
+          </div>
+          <button id="updateChart" class="btn">更新圖表</button>
+        </div>
+        <canvas id="priceChart"></canvas>
+        <div id="chartTooltip" class="chart-tooltip"></div>
+      </div>
+    </div>
+  </section>
+</div>
 
 <script src="0613.js"></script>
 </body>
